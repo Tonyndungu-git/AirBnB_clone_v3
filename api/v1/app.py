@@ -1,17 +1,17 @@
-""" Create the Flask application """
-from flask import Flask, jsonify
+""" Create the Flask application and blueprint """
+from flask import Flask
+from api.v1.views import app_views
+from models import storage
 import os
 
 app = Flask(__name__)
+app.register_blueprint(app_views)
 
+@app.teardown_appcontext
+def teardown_appcontext(exception):
+    storage.close()
 
-@app.route('/api/v1/status', methods=['GET'])
-def get_status():
-    """ Create a dictionary representing the status response """
-    status_response = {"status": "ok"}
-    return jsonify(status_response)
-
-
-if __name__ == '__main__':
-    app.run(host=os.environ['HBNB_API_HOST'],
-            port=int(os.environ['HBNB_API_PORT']))
+if __name__ == "__main__":
+    host = os.environ.get('HBNB_API_HOST', '0.0.0.0')
+    port = int(os.environ.get('HBNB_API_PORT', 5000))
+    app.run(host=host, port=port, threaded=True)
