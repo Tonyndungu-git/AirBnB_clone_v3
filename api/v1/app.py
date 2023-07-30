@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 """ Create the Flask application and blueprint """
+import os
 from flask import Flask
 from api.v1.views import app_views
 from models import storage
