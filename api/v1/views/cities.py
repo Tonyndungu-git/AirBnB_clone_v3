@@ -7,6 +7,7 @@ handles all default RESTFul API actions
 from flask import Flask, jsonify, abort, request
 from api.v1.views import app_views
 from models import storage, city
+from models.city import City
 
 
 @app_views.route('/states/<state_id>/cities',
