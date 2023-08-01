@@ -6,7 +6,7 @@ handles all default RESTFul API actions
 """
 from flask import Flask, jsonify, abort, request, make_response
 from api.v1.views import app_views
-from models import storage, place, city, user
+from models import storage, place, city, user, amenity
 
 
 @app_views.route('/cities/<city_id>/places',
@@ -29,7 +29,8 @@ def get_place(place_id):
     return jsonify(place.to_dict())
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/places/<place_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_place(place_id):
     """ Deletes a place in the list """
     place = storage.get('Place', place_id)
